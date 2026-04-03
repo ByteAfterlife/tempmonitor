@@ -65,6 +65,8 @@ jobs:
       - name: Sign Docker image
         if: github.event_name != 'pull_request'
         env:
+          IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
-          cosign sign --yes --identity-token ghcr.io/byteafterlife/tempmonitor@${DIGEST}
+          echo "Signing image: ${IMAGE}@${DIGEST}"
+          cosign sign --yes ${IMAGE}@${DIGEST}
