@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  tempmon:
+    image: tempmonitor
+    container_name: tempmonitor
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    volumes:
+      - /sys/class/thermal/thermal_zone0/temp:/temp:ro
+
