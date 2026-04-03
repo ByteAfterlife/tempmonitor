@@ -4,9 +4,8 @@ WORKDIR /app
 COPY main.go .
 RUN go build -o server main.go
 
-FROM alpine:latest
+FROM scratch
 WORKDIR /root/
 COPY --from=builder /app/server .
-
 EXPOSE 8080
-CMD ["./server"]
+CMD ["/server"]
