@@ -63,8 +63,8 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Sign Docker image
-        if: false # ${{ github.event_name != 'pull_request' }}
+        if: github.event_name != 'pull_request'
         env:
-          TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
-        run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+        run: |
+          cosign sign --yes --identity-token ghcr.io/byteafterlife/tempmonitor@${DIGEST}
