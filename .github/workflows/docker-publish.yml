@@ -65,7 +65,7 @@ jobs:
       - name: Sign Docker image
         if: github.event_name != 'pull_request'
         env:
-          IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          IMAGE: ${{ env.REGISTRY }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
           echo "Signing image: ${IMAGE}@${DIGEST}"
