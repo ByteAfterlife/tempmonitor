@@ -7,14 +7,14 @@ This project is designed to monitor 1 CPU's temperature on a linux server. Many 
 The code is (hopefully) pretty simple. You GET a simple HTTP server, it returns the temperature if you authenticate correctly, and optionally (mostly for integration with Uptime Kuma) lets you specify the "X-Temp-Expect" header, which I will explain in another section, but what that does is if the expectation you specify there is not matching the actual temperature, it returns a 417 status code, so you can easily check for that with uptime monitoring tools.
 
 # Dependencies
-Docker (recommend docker-compose too) or Go
-A Linux computer/server with a /sys/class/thermal/thermal_zone0/temp file, or thermal_zone(x)
-For installation:
-An internet connection
-(wget and unzip) or (git)
+Docker (recommend docker-compose too) or Go<br>
+A Linux computer/server with a /sys/class/thermal/thermal_zone0/temp file, or thermal_zone(x)<br>
+For installation:<br>
+An internet connection<br>
+(wget and unzip) or (git)<br>
 
 # How to run
-Make a new folder somewhere, then go into it.
+Make a new folder somewhere, then go into it.<br>
 wget and unzip:
 ```
 wget https://github.com/ByteAfterlife/tempmonitor/archive/refs/heads/main.zip && unzip main.zip && cd tempmonitor-main
@@ -30,7 +30,7 @@ const (
     password = "1Xbq59yFD6toT5Y3HSLPU8kB4R88c95JHnKw0kpN3cxbML5VGSwTSiOqz6qEZuFH"
 )
 ```
-To have a different username and password for security. By default, those are the credentials.
+To have a different username and password for security. By default, those are the credentials.<br>
 Next part depends if you want to use Docker or not. If yes:
 ```
 docker build -t tempmonitor .
@@ -40,14 +40,14 @@ And if you do not want to use thermal_zone0, open docker-compose.yml and change 
 ```
       - /sys/class/thermal/thermal_zone0/temp:/temp:ro
 ```
-Where it says thermal_zone0 to whatever CPU number you want
-If you do not have docker compose, you should, it's pretty good, but you can run this instead if you do not have compose:
+Where it says thermal_zone0 to whatever CPU number you want<br>
+If you do not have docker compose, you should, it's pretty good, but you can run this instead if you do not have docker compose:
 ```
 docker build -t tempmonitor .
 docker run --name tempmonitor -p 8080:8080 --restart unless-stopped -v /sys/class/thermal/thermal_zone0/temp:/temp:ro tempmonitor
 ```
 
-If you do not want to use docker:
+If you do not want to use docker:<br>
 (replace thermal_zone0 with whatever other CPU you want to monitor in the first command)
 ```
 sed -i 's|ioutil.ReadFile("/temp")|ioutil.ReadFile("/sys/class/thermal/thermal_zone0/temp")|' main.go && go build -o server main.go && ./server
@@ -86,7 +86,7 @@ You can also test if you can access it externally (not just in your terminal on 
 ```bash
 echo "http://$(echo $SSH_CONNECTION | awk '{print $3}'):8080"
 ```
-Which should print something like "http://192.168.56.10:8080" or "http://192.168.1.19:8080"
+Which should print something like "http://192.168.56.10:8080" or "http://192.168.1.19:8080"<br>
 Open that link in a browser (in many terminals, you can just hold ctrl and left click it) and you should see your server temperature!
 
 # X-Temp-Expect Format
