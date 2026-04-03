@@ -7,11 +7,11 @@ This project is designed to monitor 1 CPU's temperature on a linux server. Many 
 The code is (hopefully) pretty simple. You GET a simple HTTP server, it returns the temperature if you authenticate correctly, and optionally (mostly for integration with Uptime Kuma) lets you specify the "X-Temp-Expect" header, which I will explain in another section, but what that does is if the expectation you specify there is not matching the actual temperature, it returns a 417 status code, so you can easily check for that with uptime monitoring tools.
 
 # Dependencies
-Docker (recommend docker-compose too) or Go<br>
-A Linux computer/server with a /sys/class/thermal/thermal_zone0/temp file, or thermal_zone(x)<br>
-For installation:<br>
-An internet connection<br>
-(wget and unzip) or (git)<br>
+- Docker (recommend docker-compose too) or Go<br>
+- A Linux computer/server with a /sys/class/thermal/thermal_zone0/temp file, or thermal_zone(x)<br>
+## For installation:<br>
+- An internet connection<br>
+- (wget and unzip) or (git)<br>
 
 # How to run
 Make a new folder somewhere, then go into it.<br>
