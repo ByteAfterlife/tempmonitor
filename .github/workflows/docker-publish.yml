@@ -65,8 +65,8 @@ jobs:
       - name: Sign Docker image
         if: github.event_name != 'pull_request'
         env:
-          IMAGE: ${{ env.REGISTRY }}/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
         run: |
-          echo "Signing image: ${IMAGE}@${DIGEST}"
-          cosign sign --yes ${IMAGE}@${DIGEST}
+          IMAGE=$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')
+          echo "Signing image: ghcr.io/${IMAGE}@${DIGEST}"
+          cosign sign --yes ghcr.io/${IMAGE}@${DIGEST}
